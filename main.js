@@ -1,27 +1,50 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow} = require('electron')
+const {app, BrowserWindow, screen,ipcMain} = require('electron')
 const path = require('path')
+const log = require('electron-log');
 
-function createWindow () {
+var network = require('network');
+ 
+
+  
+function createMainWindow (width,height) {
   const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
-    webPreferences: {
-      preload: path.join(__dirname, 'preload.js')
+    width: 500,
+    height: 300,
+    show:false,
+    frame: false,
+    x: width - 500,
+    y: height- 340,
+    webPreferences:{
+      nodeIntegration:true,
+      enableRemoteModule:true
     }
   })
 
   mainWindow.loadFile('index.html')
+  mainWindow.openDevTools()
 
+  network.get_interfaces_list(function(err, obj) {
+
+    mainWindow.webContents.send('load-interfaces',obj)  
+    mainWindow.show()
+
+  })
 }
 
 
 app.whenReady().then(() => {
-  createWindow()
 
-  app.on('activate', function () {
-    if (BrowserWindow.getAllWindows().length === 0) createWindow()
-  })
+  
+
+
+  let display = screen.getPrimaryDisplay();
+  let width = display.bounds.width;
+  let height = display.bounds.height;
+
+  createMainWindow(width,height)
+
+
 })
 
 

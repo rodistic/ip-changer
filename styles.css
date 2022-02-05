@@ -1,3 +1,157 @@
-/* styles.css */
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400&display=swap');
 
-/* Add styles here to customize the appearance of your app */
+body{
+    height: 100%;
+    overflow: hidden;
+    width: 100%;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+.header{
+	user-select: none;
+	z-index: 799;
+	width: 100%;
+	height: 24px;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	background: rgba(31,26,90,1.00);
+	-webkit-app-region:drag;
+	
+	font-weight: bold;
+}
+
+.close-button{
+	text-align:center;
+	width: 48px;
+	position: absolute;
+    height: 16px;
+	right: 0px;
+	top: 0px;
+	background: rgba(31,26,90,1.00);
+	color: rgba(255,255,255,0.52);
+	font-size: 11px;
+	padding: 4px 0px;
+	z-index: 800;
+	-webkit-app-region: no-drag
+}
+
+.close-button:hover{
+    background: rgba(196,12,15,1.00);
+	color: rgba(229,229,229,1.00);
+	cursor: pointer;
+}
+
+.min-tray{
+	text-align:center;
+	width: 48px;
+	position: absolute;
+	right: 48px;
+	top: 0px;
+    height: 16px;
+	vertical-align: middle;
+	background: rgba(31,26,90,1.00);
+	color: rgba(255,255,255,0.52);
+	font-size: 11px;
+	padding: 4px 0px;
+	z-index: 800;
+	-webkit-app-region: no-drag
+}
+
+.min-tray:hover{
+	
+	background: rgba(13,46,96,1.00);
+	color: rgba(229,229,229,1.00);
+	cursor: pointer;
+	
+}
+
+.header-heading{
+	position: absolute;
+	color:rgba(251,251,251,0.73);
+	left: 10px;
+	top: 0px;
+    font-size: 12px;
+    margin: 4px;
+}
+
+.body-content{
+    width: 100%;
+    position: absolute;
+    top: 24px;
+    height: 100%;
+    padding: 6px 0px 24px;
+    overflow-y: auto;
+}
+
+.item{
+    position: relative;
+    background-color: #f3f3f3;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    padding: 2px 6px;
+    width: 90%;
+    margin: 12px auto;
+    cursor: pointer;
+}
+
+.item-name{
+    margin: 4px 0px 3px;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.item-model{
+    font-size:12px;
+    margin: 0px 0px 5px;
+}
+
+.item-ip,.item-gw{
+    font-size: 14px;
+    margin: 2px 0px 2px;
+}
+
+.item-type {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 20px;
+    color: rgb(66, 152, 233);
+}
+
+label{
+    width: 100%;
+    margin: 5px 0px 0px 0px;
+}
+
+input{
+    width: 90%;
+    padding: 4px 5px;
+    border: solid 1px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+}
+
+.interface{
+    padding: 2px 12px;
+    position: relative;
+}
+
+.interface-name{
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+    margin: 4px 0px 4px 0px;
+}
+
+.interface-model{
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+    margin: 0px 0px 12px 0px;
+}
+
+.interface-back{
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    cursor: pointer;
+}

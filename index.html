@@ -2,18 +2,38 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'">
     <link href="./styles.css" rel="stylesheet">
-    <title>Hello World!</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
+    <title>IP-Changer</title>
   </head>
   <body>
-    <h1>Hello World!</h1>
-    We are using Node.js <span id="node-version"></span>,
-    Chromium <span id="chrome-version"></span>,
-    and Electron <span id="electron-version"></span>.
 
-    <!-- You can also require other files to run in this process -->
-    <script src="./renderer.js"></script>
+    <div class="header">
+
+      <p class="header-heading" id="win_title">IP-Changer</p>
+
+      <div id="minApp" class="min-tray"><b>_</b></div>
+      <div id="closeApp" class="close-button"><b>X</b></div>
+    </div>
+
+
+    <div class="body-content">
+
+      <div id="content"></div>
+      <br><br>
+    </div>
+    
+    
+
+
+
+
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+
+<script src="../ip-changer/resources/js/jquery.js"></script>     
+<script src="../ip-changer/resources/js/main_win.js"></script>     
+
+<script>if (window.module) module = window.module;</script>
+
   </body>
 </html>
