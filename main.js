@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow, screen,ipcMain} = require('electron')
+const {app, BrowserWindow, screen,ipcMain,Tray,Menu} = require('electron')
 const path = require('path')
 const log = require('electron-log');
 const jetpack = require('fs-jetpack').cwd(app.getAppPath());
@@ -8,8 +8,7 @@ const child_process = require('child_process');
 const dialog = require('electron').dialog;
 var sudo = require('sudo-prompt');
 var options = {
-  name: 'Electron',
-  icns: '/Applications/Electron.app/Contents/Resources/Electron.icns', // (optional)
+  name: 'SPIE'
 };
 
 
@@ -43,9 +42,56 @@ function createMainWindow (width,height) {
 
     mainWindow.webContents.send('load-interfaces',obj) 
     mainWindow.webContents.send('load-profiles',profileArr) 
-    mainWindow.show()
 
   })
+
+let tray = null;
+//  tray documentation at - https://github.com/electron/electron/blob/main/docs/api/menu-item.md
+const template = [
+  {
+      label: 'SPIE IP-Changer',
+      enabled: false,
+  },
+  {
+    type: 'separator',
+  },
+  {
+    label: 'Öffnen', click: function () {
+        mainWindow.show();
+    },
+  },
+  {
+    label: 'Profile verwalten', click: function () {
+      createProfileManager();
+    },
+  },
+  {
+      type: 'separator',
+  },
+  {
+    label: 'Über',click:function() {
+      createAbout();
+    },
+  },
+  {
+    type: 'separator',
+  },
+  {
+      label: 'Beenden', click: function () {
+          app.quit();
+      },
+  },
+];
+const contextMenu = Menu.buildFromTemplate(template);
+tray = new Tray(path.join(__dirname,'/resources/img/icon.ico'));
+tray.setContextMenu(contextMenu);
+tray.setToolTip('SPIE IP-Changer');
+  
+
+ipcMain.on('minimize-tray', (event,args) => {
+    if (tray) { return mainWindow.hide(); }
+})
+
 }
 
 function createProfileManager () {
@@ -74,6 +120,23 @@ function createProfileManager () {
   
   })
 
+}
+
+var aboutWin
+function createAbout () {
+  aboutWin = new BrowserWindow({
+    width: 600,
+    height: 300,
+    show:true,
+    frame:false,
+    webPreferences:{
+      nodeIntegration:true,
+      enableRemoteModule:true
+    }
+  })
+
+  aboutWin.loadFile('about.html')
+  //aboutWin.openDevTools()
 }
 
 
@@ -141,7 +204,6 @@ ipcMain.on('update-ip-address',(event,args) => {
  
 })
 
-  
 app.whenReady().then(() => {
 
   
@@ -160,3 +222,4 @@ app.whenReady().then(() => {
 app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') app.quit()
 })
+

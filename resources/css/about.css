@@ -1,0 +1,31 @@
+.about-wrapper{
+    text-align: center;
+    padding: 60px 0;
+}
+
+#closeWin{
+    position: absolute;
+    font-weight: bold;
+    cursor: pointer;
+    top: 20px;
+    right: 20px;
+    font-stretch: expanded;
+}
+
+#closeWin:hover{
+   color: rgba(0, 0, 0, 0.644);
+}
+
+.autor{
+    font-size: 20px;
+    margin: 8px 0 ;
+}
+
+#version{
+    color: rgba(0, 0, 0, 0.733);
+}
+
+.img{
+    height: 120px;
+    margin: -30px;
+}

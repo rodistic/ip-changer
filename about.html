@@ -1,0 +1,48 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+    <link href="./resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./styles.css" rel="stylesheet">
+        <title>Über..</title>
+        <link rel="stylesheet" href="./resources/css/about.css">
+    </head>
+
+    <body>
+
+        <div class="about-wrapper">
+
+        <img src="./resources/img/spie-telba.png" alt="SPIE TELBA" class="img">
+
+        <p id="closeWin">X</p>
+
+        <p class="autor">Autor: Tim Rimbeck</p>
+        <p>E-Mail: trimbeck@telba-gmbh.de <br> Bei Problemen und Bugs bitte melden!</p>
+
+
+
+        <p id="version"></p>
+
+    </div> 
+
+
+        
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+    <script src="./resources/js/jquery.js"></script>
+    <script>
+
+        var appVersion = require('electron').remote.app.getVersion();
+        var BrowserWindow = require('electron').remote.BrowserWindow
+
+        $('#version').text("IP-Changer Version "+appVersion)
+
+        $('#closeWin').click(function(){
+            var window = BrowserWindow.getFocusedWindow();
+            window.close();
+        })
+
+    </script>
+    <script>if (window.module) module = window.module;</script>
+    </body>
+    
+
+</html>

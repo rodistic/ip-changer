@@ -1,12 +1,17 @@
 {
   "name": "spie-ip-changer",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "IP-Changer für Außendienst",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "pack": "electron-builder",
+    "dist": "electron-builder --p always"
   },
-  "repository": "https://github.com/rodistic/ip-changer",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rodistic/ip-changer.git"
+  },
   "keywords": [
     "Electron",
     "quick",
@@ -14,14 +19,34 @@
     "tutorial",
     "demo"
   ],
+  "build": {
+    "appId": "spie.ipchanger",
+    "productName": "SPIE IP-Changer",
+    "asar": true,
+    "asarUnpack": "**/resources/config/**",
+    "win": {
+      "target": "NSIS",
+      "icon": "./resources/img/icon.ico"
+    },
+    "nsis": {
+      "oneClick": true,
+      "deleteAppDataOnUninstall": true
+    },
+    "publish": {
+      "provider": "github",
+      "token": "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"
+    }
+  },
   "author": "Tim Rimbeck",
   "license": "CC0-1.0",
   "devDependencies": {
-    "electron": "^10.1.5"
+    "electron": "^10.1.5",
+    "electron-builder": "^22.9.1"
   },
   "dependencies": {
     "electron-log": "^4.3.0",
     "electron-sudo": "^4.0.12",
+    "electron-updater": "^4.3.5",
     "fs-jetpack": "^4.1.0",
     "network": "^0.6.1",
     "set-ip-address": "^1.1.0",
