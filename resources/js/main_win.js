@@ -3,11 +3,26 @@ const { BrowserWindow,app } = require('electron').remote
 let ipc = require('electron').ipcRenderer;
 
 var netInterfaces 
+var profiles
+var currentInterface
+
+$('#manage-profiles').click(function(){
+
+    ipc.send('manage-profiles','')
+
+})
+
 
 ipc.on('load-interfaces', (event,args) => {
     
     netInterfaces = args;
     loadInterfaces()
+
+})
+
+ipc.on('load-profiles', (event,args) => {
+    
+    profiles = args
 
 })
 
@@ -107,6 +122,7 @@ function openInterface(id){
 
                 if(`${key}` == "name"){
                     name = `${value[key]}`
+                    currentInterface =`${value[key]}`
                 }
     
                 if(`${key}` == "model"){
@@ -134,15 +150,66 @@ function openInterface(id){
     intHtml = intHtml + "<p class='interface-name'><b>"+name+"</b></p>"
     intHtml = intHtml + "<p class='interface-model'>"+model+"</p>"
 
+    intHtml = intHtml + "<label>Manuell Konfigurieren</label><input id='checkbox' onclick='confirmCheck()' type='checkbox'>"
+
+    intHtml = intHtml + "<div id='profile-sel'><label>Profil-Auswählen:</label>"
+    intHtml = intHtml + "<select id='profile'>"
+    intHtml = intHtml + "<option value='dhcp'>DHCP</option>"
+
+    $.each(profiles,function(index,value){
+
+        intHtml = intHtml + "<option value='"+index+"'>"+value.name+"</option>"
+
+    })
+
+    intHtml = intHtml + "</select><br><br><button class='btn btn-sm btn-info' style='margin:auto' onclick='saveP()'>Anwenden</button> </div><div style='display:none' id='manual'> "
 
     intHtml = intHtml + "<label for='ipaddr'>IP-Adresse</label><br><input type='text' id='ipaddr' placeholder='192.168.2.2'><br>"
     intHtml = intHtml + "<label for='netmask'>Netmask</label><br><input type='text' id='netmask' placeholder='255.255.255.0'><br>"
     intHtml = intHtml + "<label for='gw'>Standard Gateway</label><br><input type='text' id='netmask' placeholder='192.168.2.2'><br><br>"
     intHtml = intHtml + "<label for='dns1'>Primär DNS-Server</label><br><input type='text' id='dns1' placeholder='8.8.8.8'><br>"
-    intHtml = intHtml + "<label for='dns1'>Sekundär DNS-Server</label><br><input type='text' id='dns2' placeholder='8.8.4.4'><br>"
+    intHtml = intHtml + "<label for='dns1'>Sekundär DNS-Server</label><br><input type='text' id='dns2' placeholder='8.8.4.4'><br><br><button onclick='saveM()' class='btn btn-sm btn-info' style='margin:auto'>Anwenden</button></div>"
 
     intHtml = intHtml + "</div>"
     $('#content').html(intHtml)
 
 }
 
+function confirmCheck() {
+  if ($('#checkbox').is(':checked')) {
+    $('#profile-sel').hide()
+    $('#manual').show()
+  } else {
+    $('#profile-sel').show()
+    $('#manual').hide()
+  }
+}
+
+function saveP(){
+    var selProfile = $('#profile').val()
+
+    if(selProfile == "dhcp"){
+
+        var dhcp = {"name":"dhcp","interface":currentInterface}
+
+        ipc.send('update-ip-address',dhcp)
+
+    } else {
+
+        $.each(profiles, function(index,value){
+
+            if(index == selProfile){
+    
+                value.interface = currentInterface
+    
+                ipc.send('update-ip-address',value)
+    
+            }
+    
+        })
+
+    }
+
+    
+
+}

@@ -1,0 +1,42 @@
+.close-button{
+    line-height: 60px !important;
+}
+
+.min-tray{
+    line-height: 30px !important;
+}
+
+body{
+    height: 100%;
+}
+
+.row{
+    height: 100%;
+}
+
+.menu-card{
+    padding: 24px 0px 0px 0px;
+    height: 100%;
+    background-color: rgb(241, 241, 241);
+    width: 100%;
+}
+
+.list-item{
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid rgba(70, 70, 70, 0.10);
+    padding:12px 0px;
+    cursor: pointer;
+}
+.list-item:hover{
+    background-color: rgba(196, 196, 196, 0.1);
+}
+
+.list-item p{
+    margin: 0;
+}
+
+#profile-content{
+    padding: 24px 0 0 0;
+    margin: 0;
+}

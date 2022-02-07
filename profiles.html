@@ -1,0 +1,42 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link href="../ip-changer/resources/css/bootstrap.min.css" rel="stylesheet">
+        <link href="./styles.css" rel="stylesheet">
+        <link href="../ip-changer/resources/css/profile.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
+        <title>IP-Changer - Profile verwalten</title>
+    </head>
+    <body>
+
+        <div class="header">
+
+            <p class="header-heading" id="win_title">IP-Changer</p>
+      
+            <div id="minApp" class="min-tray"><span><b>_</b></span></div>
+            <div id="closeApp" class="close-button"><span><b>X</b></span></div> 
+          </div>
+
+
+            <div class="row">
+
+                <div class=" menu-card col-sm-4">
+                    <div id="list-content"></div>
+                    <div class="list-item" id="new-profile">
+                        <p>Neues Profil erstellen</p>
+                    </div>
+                </div>
+
+                <div class="col-sm-8">
+                    <div id="profile-content"></div>
+                </div>
+            </div>
+
+            <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+
+                <script src="../ip-changer/resources/js/jquery.js"></script>     
+                <script src="../ip-changer/resources/js/profiles.js"></script>     
+
+            <script>if (window.module) module = window.module;</script>
+    </body>
+</html>

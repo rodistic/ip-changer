@@ -1,0 +1,58 @@
+<br>
+
+<h3>Neues Profil erstellen</h3>
+<p>Profile können auf Netzwerkschnittstellen angewendet werden.</p>
+<p id="warning" class="text-danger"></p>
+
+<label>Name des Profiles</label>
+<input class="form-input" type="text" id="profile-name">
+<br><br>
+<label>IP-Adresse</label>
+<input class="form-input" type="text" id="profile-ip">
+
+<label>Netmask</label>
+<input class="form-input" type="text" id="profile-netmask">
+
+<label>Gateway</label>
+<input class="form-input" type="text" id="profile-gateway">
+
+<label>Primär DNS-Server</label>
+<input class="form-input" type="text" id="profile-dns1">
+
+<label>Sekundar DNS-Server</label>
+<input class="form-input" type="text" id="profile-dns2">
+
+<br><br>
+
+<button class="btn btn-success" id="profile-create-new">Erstellen</button>
+
+<script>
+    $('#profile-create-new').click(function(){
+
+console.log('Go')
+
+var name = $('#profile-name').val()
+var ip = $('#profile-ip').val()
+var gateway = $('#profile-gateway').val()
+var netmask = $('#profile-netmask').val()
+var dns1 = $('#profile-dns1').val()
+var dns2 = $('#profile-dns2').val()
+
+if(name.length <= 2 || ip.length <= 6 || netmask.length <= 6){
+
+    $('#warning').text('Eingaben überprüfen! Es muss ein Name, eine IP & Netzmaske angegeben werden')
+
+} else {
+
+    $('#warning').text('')
+
+    var new_obj = {"name":name,"ip":ip,"gateway":gateway,"netmask":netmask,"dns1":dns1,"dns2":dns2}
+    profiles.push(new_obj)
+    
+    ipc.send('update-profiles',profiles)
+
+}
+
+})
+
+</script>

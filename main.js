@@ -2,19 +2,34 @@
 const {app, BrowserWindow, screen,ipcMain} = require('electron')
 const path = require('path')
 const log = require('electron-log');
-
+const jetpack = require('fs-jetpack').cwd(app.getAppPath());
 var network = require('network');
- 
+const child_process = require('child_process');
+const dialog = require('electron').dialog;
+var sudo = require('sudo-prompt');
+var options = {
+  name: 'Electron',
+  icns: '/Applications/Electron.app/Contents/Resources/Electron.icns', // (optional)
+};
 
-  
+
+
+//GLOBAL VARS
+var mainWindow
+var profileManager
+let profileArr = JSON.parse(jetpack.read(path.join(__dirname+'/resources/config/profiles.txt')))
+
+log.info(profileArr)
+
 function createMainWindow (width,height) {
-  const mainWindow = new BrowserWindow({
-    width: 500,
-    height: 300,
+  mainWindow = new BrowserWindow({
+    width: 600,
+    height: 400,
     show:false,
     frame: false,
-    x: width - 500,
-    y: height- 340,
+    alwaysOnTop:true,
+    x: width - 600,
+    y: height- 440,
     webPreferences:{
       nodeIntegration:true,
       enableRemoteModule:true
@@ -22,17 +37,111 @@ function createMainWindow (width,height) {
   })
 
   mainWindow.loadFile('index.html')
-  mainWindow.openDevTools()
+  //mainWindow.openDevTools()
 
   network.get_interfaces_list(function(err, obj) {
 
-    mainWindow.webContents.send('load-interfaces',obj)  
+    mainWindow.webContents.send('load-interfaces',obj) 
+    mainWindow.webContents.send('load-profiles',profileArr) 
     mainWindow.show()
 
   })
 }
 
+function createProfileManager () {
+  profileManager = new BrowserWindow({
+    width: 1000,
+    height: 700,
+    show:false,
+    frame: false,
+    webPreferences:{
+      nodeIntegration:true,
+      enableRemoteModule:true
+    }
+  })
 
+  profileManager.loadFile('profiles.html')
+  //profileManager.openDevTools()
+
+  profileManager.on('ready-to-show',function(){
+    profileManager.webContents.send('load-profile',profileArr)  
+    profileManager.show()
+  })
+
+  profileManager.on('closed', function(){
+
+    mainWindow.show()
+  
+  })
+
+}
+
+
+
+ipcMain.on('manage-profiles', (event,args) => {
+  
+  event.returnValue = 'received'
+  log.info('received')
+  mainWindow.hide()
+  createProfileManager()
+
+})
+
+ipcMain.on('update-profiles', (event,args) => {
+
+  profileArr = args
+  jetpack.write(__dirname+'/resources/config/profiles.txt',JSON.stringify(args));
+  profileManager.webContents.send('load-profile',profileArr)  
+
+})
+
+ipcMain.on('update-ip-address',(event,args) => {
+
+  log.info("Applying Profile:"+args.name+". To Interface: "+args.interface)
+
+  if(args.name == "dhcp"){
+
+    sudo.exec('netsh interface ipv4 set address name="'+args.interface+'" dhcp && netsh interface ip set dns "'+args.interface+'" dhcp', options,
+    function(error, stdout, stderr) {
+        console.log('stdout: ' + stdout);
+        setTimeout(() => {
+    
+          network.get_interfaces_list(function(err, obj) {
+      
+            mainWindow.webContents.send('load-interfaces',obj) 
+            mainWindow.webContents.send('load-profiles',profileArr)
+        
+          })
+      
+        }, 2000);
+    });
+
+  } else {
+
+
+    sudo.exec('netsh interface ipv4 set address name="'+args.interface+'" static '+args.ip+' '+args.netmask+' '+args.gateway+' && netsh interface ip set dns "'+args.interface+'" static '+args.dns1+' && netsh interface ip add dns "'+args.interface+'" static '+args.dns2+'', options,
+  function(error, stdout, stderr) {
+    console.log('stdout: ' + stdout);
+    setTimeout(() => {
+    
+      network.get_interfaces_list(function(err, obj) {
+  
+        mainWindow.webContents.send('load-interfaces',obj) 
+        mainWindow.webContents.send('load-profiles',profileArr)
+    
+      })
+  
+    }, 2000);
+  });
+
+
+  }
+
+  
+ 
+})
+
+  
 app.whenReady().then(() => {
 
   
@@ -51,4 +160,3 @@ app.whenReady().then(() => {
 app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') app.quit()
 })
-

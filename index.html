@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
+    <link href="../ip-changer/resources/css/bootstrap.min.css" rel="stylesheet">
     <link href="./styles.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
     <title>IP-Changer</title>
@@ -12,14 +13,21 @@
 
       <p class="header-heading" id="win_title">IP-Changer</p>
 
-      <div id="minApp" class="min-tray"><b>_</b></div>
-      <div id="closeApp" class="close-button"><b>X</b></div>
+      <div id="minApp" class="min-tray"><span><b>_</b></span></div>
+      <div id="closeApp" class="close-button"><span><b>X</b></span></div>
     </div>
 
 
     <div class="body-content">
 
-      <div id="content"></div>
+      <div class="item" id="manage-profiles">
+        <p class="item-name" style="text-align: center;">Profile Verwalten</p>
+      </div>
+
+      <hr>
+
+      <div id="content">
+      </div>
       <br><br>
     </div>
     

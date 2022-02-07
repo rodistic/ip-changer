@@ -1,0 +1,1 @@
+[{"name":"Unify Atlantic Lan","ip":"192.0.2.20","gateway":"","netmask":"255.255.255.0","dns1":"","dns2":""},{"name":"Sandersdorf","ip":"192.168.202.245","gateway":"192.168.202.254","netmask":"255.255.255.0","dns1":"192.168.202.254","dns2":""}]
