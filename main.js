@@ -155,7 +155,9 @@ ipcMain.on('update-profiles', (event,args) => {
 
   profileArr = args
   jetpack.write(__dirname+'/resources/config/profiles.txt',JSON.stringify(args));
+  log.info(jetpack.read(path.join(__dirname+'/resources/config/profiles.txt')))
   profileManager.webContents.send('load-profile',profileArr)  
+  mainWindow.webContents.send('load-profiles',profileArr)
 
 })
 

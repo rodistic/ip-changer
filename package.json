@@ -1,6 +1,6 @@
 {
   "name": "spie-ip-changer",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "IP-Changer für Außendienst",
   "main": "main.js",
   "scripts": {

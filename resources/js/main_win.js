@@ -12,7 +12,6 @@ $('#manage-profiles').click(function(){
 
 })
 
-
 ipc.on('load-interfaces', (event,args) => {
     
     netInterfaces = args;
