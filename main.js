@@ -7,6 +7,7 @@ var network = require('network');
 const child_process = require('child_process');
 const dialog = require('electron').dialog;
 var sudo = require('sudo-prompt');
+const AutoLaunch = require('auto-launch');
 var options = {
   name: 'SPIE'
 };
@@ -207,7 +208,13 @@ ipcMain.on('update-ip-address',(event,args) => {
 app.whenReady().then(() => {
 
   
-
+  let autoLaunch = new AutoLaunch({
+    name: 'IP-Changer',
+    path: app.getPath('exe'),
+  });
+  autoLaunch.isEnabled().then((isEnabled) => {
+    if (!isEnabled) autoLaunch.enable();
+  });
 
   let display = screen.getPrimaryDisplay();
   let width = display.bounds.width;

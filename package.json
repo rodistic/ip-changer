@@ -44,6 +44,7 @@
     "electron-builder": "^22.9.1"
   },
   "dependencies": {
+    "auto-launch": "^5.0.5",
     "electron-log": "^4.3.0",
     "electron-sudo": "^4.0.12",
     "electron-updater": "^4.3.5",
