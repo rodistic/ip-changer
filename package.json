@@ -48,7 +48,7 @@
     "electron-log": "^4.3.0",
     "electron-sudo": "^4.0.12",
     "electron-updater": "^4.3.5",
-    "fs-jetpack": "^4.1.0",
+    "fs-jetpack": "^5.1.0",
     "network": "^0.6.1",
     "set-ip-address": "^1.1.0",
     "sudo-prompt": "^9.2.1"
